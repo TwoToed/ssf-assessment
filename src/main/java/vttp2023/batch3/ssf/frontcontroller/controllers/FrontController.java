@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vttp2023.batch3.ssf.frontcontroller.model.Captcha;
@@ -31,13 +32,13 @@ public class FrontController {
 		if(result.hasErrors()){
 			System.out.println(login);
             return "view0";
-        }
+        }	
 
 		System.out.println(login.getAttempts());
 
 		String username = login.getUsername();
 		String password = login.getPassword();
-		if(service.checkdisabled(username).equals("banned")){
+		if(service.checkdisabled(username) != null){
 			m.addAttribute("bannedname", username);
 			return "view2";
 		}
@@ -67,8 +68,18 @@ public class FrontController {
 	}
 
 	@GetMapping("/protected/view1.html")
-	public String protectedview(){
-		return "view1";
+	public String protectedview(HttpSession session){
+		if(((Login) session.getAttribute("authentication")).isAuthenticated()){
+			return "view1";
+		}
+		return "view0";
+	}
+
+	@PostMapping("/logout")
+	public String loggedout(HttpSession session){
+		session.invalidate();
+		return "view0";
+
 	}
 
 }
