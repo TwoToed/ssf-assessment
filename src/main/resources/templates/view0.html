@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+	TODO: Task 1, Task 2, Task 3
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login</title>
+	</head>
+	<body>
+
+		<h2>Please Login</h2>
+		<form method="POST" data-th-action="@{/login}" data-th-object="${login}">
+			<table>
+				<tr>
+					<td> 
+						<label for="username">Username:</label> 
+					</td>
+					<td>
+						<input type="text" id="username" size="30" 
+								placeholder="Please type in your username" data-th-field="*{username}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red;">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="password">Password:</label>
+					</td>
+					<td>
+						<input type="password" id="password" size="30" 
+								placeholder="Please type in your password" data-th-field="*{password}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">
+					</td>
+				</tr>
+				<div data-th-if = "${question != null}">
+					<tr>
+						<td>
+							<span size="30" data-th-text = "${question}"></span>
+						</td>
+
+					</tr>
+					<tr>
+						<td> 
+							<label for="Answer">Answer:</label> 
+						</td>
+				
+						<td>
+							<input type="text" id="answer" name="answer" size="30" 
+									placeholder="Answer" >
+						</td>
+					</tr>
+				</div>
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit">Login</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		
+	</body>
+</html>
